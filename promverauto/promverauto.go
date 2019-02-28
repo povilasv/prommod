@@ -1,3 +1,4 @@
+// +build go1.12
 package promverauto
 
 import (
