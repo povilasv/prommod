@@ -1,3 +1,5 @@
+![prommod](https://api.travis-ci.com/povilasv/prommod.svg?branch=master)
+
 # prommod
 
 Export Golang Module information to Prometheus.
