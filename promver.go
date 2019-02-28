@@ -91,5 +91,5 @@ func Info() string {
 		info = append(info, d.Path+": "+d.Version)
 	}
 
-	return fmt.Sprintf("(%s)", strings.Join(info, ","))
+	return fmt.Sprintf("(%s)", strings.Join(info, ", "))
 }
