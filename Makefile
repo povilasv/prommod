@@ -1,5 +1,5 @@
-LINT_FLAGS :=--disable-all --enable=vet --enable=vetshadow --enable=golint --enable=ineffassign --enable=goconst --enable=gofmt --enable=goimports --deadline=120s
-LINTER_EXE := gometalinter.v2
+LINT_FLAGS := run --deadline=120s
+LINTER_EXE := golangci-lint
 LINTER := $(GOPATH)/bin/$(LINTER_EXE)
 TESTFLAGS := -v -cover
 
@@ -7,7 +7,7 @@ GO111MODULE := on
 all: $(LINTER) deps test lint build
 
 $(LINTER):
-	GO111MODULE=off && go get -u gopkg.in/alecthomas/$(LINTER_EXE)
+	go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.15.0
 	$(LINTER) --install
 
 .PHONY: lint
