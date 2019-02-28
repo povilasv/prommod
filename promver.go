@@ -88,7 +88,7 @@ func Info() string {
 		if dep.Replace != nil {
 			d = dep.Replace
 		}
-		info = append(info, d.Path+": ", d.Version)
+		info = append(info, d.Path+": "+d.Version)
 	}
 
 	return fmt.Sprintf("(%s)", strings.Join(info, ","))
