@@ -1,4 +1,5 @@
 // +build go1.12
+
 package promver
 
 import (
@@ -13,12 +14,12 @@ import (
 
 // Build depedency information. Populated at build-time.
 var (
-	BuidInfo, ok = debug.ReadBuildInfo()
+	buildInfo, ok = debug.ReadBuildInfo()
 )
 
 // NewCollector returns a collector which exports metrics about current dependency information.
 func NewCollector(program string) *prometheus.GaugeVec {
-	buildInfo := prometheus.NewGaugeVec(
+	gauge := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Namespace: program,
 			Name:      "go_mod_info",
@@ -30,41 +31,50 @@ func NewCollector(program string) *prometheus.GaugeVec {
 		[]string{"name", "version"},
 	)
 	if !ok {
-		return buildInfo
+		return gauge
 	}
 
-	for _, dep := range BuidInfo.Deps {
+	for _, dep := range buildInfo.Deps {
 		d := dep
 		if dep.Replace != nil {
 			d = dep.Replace
 		}
-		buildInfo.WithLabelValues(d.Path, d.Version).Set(1)
+		gauge.WithLabelValues(d.Path, d.Version).Set(1)
 	}
-	return buildInfo
+	return gauge
 }
 
 // versionInfoTmpl contains the template used by Info.
 var versionInfoTmpl = `
-{{.program}}
-{{range $k,$v := .} $k: $v\n{{end}`
+{{.Program}}
+{{range $k,$v := .Deps}} {{$k}}: {{$v}}
+{{end}}`
 
-// Print returns version information.
+type versionPrint struct {
+	Program string
+	Deps    map[string]string
+}
+
+// Print returns module version information.
 func Print(program string) string {
-	m := map[string]string{
-		"program": program,
-	}
-	for _, dep := range BuidInfo.Deps {
-		d := dep
-		if dep.Replace != nil {
-			d = dep.Replace
+	m := make(map[string]string)
+	if ok {
+		for _, dep := range buildInfo.Deps {
+			d := dep
+			if dep.Replace != nil {
+				d = dep.Replace
+			}
+			m[d.Path] = d.Version
 		}
-		m[d.Path] = d.Version
 	}
 
 	t := template.Must(template.New("version").Parse(versionInfoTmpl))
 
 	var buf bytes.Buffer
-	if err := t.ExecuteTemplate(&buf, "version", m); err != nil {
+	if err := t.ExecuteTemplate(&buf, "version", versionPrint{
+		Program: program,
+		Deps:    m,
+	}); err != nil {
 		panic(err)
 	}
 	return strings.TrimSpace(buf.String())
@@ -73,7 +83,7 @@ func Print(program string) string {
 // Info returns dependency versions
 func Info() string {
 	var info []string
-	for _, dep := range BuidInfo.Deps {
+	for _, dep := range buildInfo.Deps {
 		d := dep
 		if dep.Replace != nil {
 			d = dep.Replace

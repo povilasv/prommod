@@ -1,2 +1,42 @@
 # promver
-Export Golang Module information to Prometheus
+
+Export Golang Module information to Prometheus.
+
+# Usage
+
+```
+import (
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/povilasv/promver"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+)
+
+func main() {
+	prometheus.Register(promver.NewCollector("test_app_name"))
+
+	http.Handle("/metrics", promhttp.Handler())
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+```
+
+# Example Metric Output
+
+```
+# HELP name_go_mod_info A metric with a constant '1' value labeled by dependency name, version, from which name was built.
+# TYPE name_go_mod_info gauge
+name_go_mod_info{name="github.com/beorn7/perks",version="v0.0.0-20180321164747-3a771d992973"} 1
+name_go_mod_info{name="github.com/golang/protobuf",version="v1.2.0"} 1
+name_go_mod_info{name="github.com/matttproud/golang_protobuf_extensions",version="v1.0.1"} 1
+name_go_mod_info{name="github.com/povilasv/promver",version="v0.0.2"} 1
+name_go_mod_info{name="github.com/prometheus/client_golang",version="v0.9.2"} 1
+name_go_mod_info{name="github.com/prometheus/client_model",version="v0.0.0-20180712105110-5c3871d89910"} 1
+name_go_mod_info{name="github.com/prometheus/common",version="v0.0.0-20181126121408-4724e9255275"} 1
+name_go_mod_info{name="github.com/prometheus/procfs",version="v0.0.0-20181204211112-1dc9a6cbc91a"} 1
+```
+
