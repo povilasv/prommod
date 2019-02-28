@@ -1,6 +1,6 @@
 // +build go1.12
 
-package promver
+package prommod
 
 import (
 	"bytes"

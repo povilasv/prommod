@@ -1,4 +1,4 @@
-module github.com/povilasv/promver
+module github.com/povilasv/prommod
 
 go 1.12
 

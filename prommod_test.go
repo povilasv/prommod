@@ -1,17 +1,17 @@
-package promver_test
+package prommod_test
 
 import (
 	"fmt"
 	"log"
 	"net/http"
 
-	"github.com/povilasv/promver"
+	"github.com/povilasv/prommod"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func ExampleNewCollector() {
-	prometheus.Register(promver.NewCollector("test_app_name"))
+	prometheus.Register(prommod.NewCollector("test_app_name"))
 
 	http.Handle("/metrics", promhttp.Handler())
 
@@ -19,6 +19,6 @@ func ExampleNewCollector() {
 }
 
 func ExamplePrint() {
-	fmt.Println(promver.Print("test_app_name"))
+	fmt.Println(prommod.Print("test_app_name"))
 	// Output: test_app_name
 }

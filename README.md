@@ -1,4 +1,4 @@
-# promver
+# prommod
 
 Export Golang Module information to Prometheus.
 
@@ -10,13 +10,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/povilasv/promver"
+	"github.com/povilasv/prommod"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
-	prometheus.Register(promver.NewCollector("test_app_name"))
+	prometheus.Register(prommod.NewCollector("test_app_name"))
 
 	http.Handle("/metrics", promhttp.Handler())
 
@@ -33,7 +33,7 @@ func main() {
 name_go_mod_info{name="github.com/beorn7/perks",version="v0.0.0-20180321164747-3a771d992973"} 1
 name_go_mod_info{name="github.com/golang/protobuf",version="v1.2.0"} 1
 name_go_mod_info{name="github.com/matttproud/golang_protobuf_extensions",version="v1.0.1"} 1
-name_go_mod_info{name="github.com/povilasv/promver",version="v0.0.2"} 1
+name_go_mod_info{name="github.com/povilasv/prommod",version="v0.0.2"} 1
 name_go_mod_info{name="github.com/prometheus/client_golang",version="v0.9.2"} 1
 name_go_mod_info{name="github.com/prometheus/client_model",version="v0.0.0-20180712105110-5c3871d89910"} 1
 name_go_mod_info{name="github.com/prometheus/common",version="v0.0.0-20181126121408-4724e9255275"} 1
@@ -43,7 +43,7 @@ name_go_mod_info{name="github.com/prometheus/procfs",version="v0.0.0-20181204211
 # Example Print
 
 ```
-fmt.Println(promver.Print("app_name"))
+fmt.Println(prommod.Print("app_name"))
 ```
 
 Output:
@@ -53,7 +53,7 @@ app_name
  github.com/beorn7/perks: v0.0.0-20180321164747-3a771d992973
  github.com/golang/protobuf: v1.2.0
  github.com/matttproud/golang_protobuf_extensions: v1.0.1
- github.com/povilasv/promver: v0.0.3
+ github.com/povilasv/prommod: v0.0.3
  github.com/prometheus/client_golang: v0.9.2
  github.com/prometheus/client_model: v0.0.0-20180712105110-5c3871d89910
  github.com/prometheus/common: v0.0.0-20181126121408-4724e9255275
@@ -63,11 +63,11 @@ app_name
 # Example Info
 
 ```
-fmt.Println(promver.Info())
+fmt.Println(prommod.Info())
 ```
 
 Output:
 
 ```
-(github.com/beorn7/perks: v0.0.0-20180321164747-3a771d992973, github.com/golang/protobuf: v1.2.0, github.com/matttproud/golang_protobuf_extensions: v1.0.1, github.com/povilasv/promver: v0.0.5, github.com/prometheus/client_golang: v0.9.2, github.com/prometheus/client_model: v0.0.0-20180712105110-5c3871d89910, github.com/prometheus/common: v0.0.0-20181126121408-4724e9255275, github.com/prometheus/procfs: v0.0.0-20181204211112-1dc9a6cbc91a)
+(github.com/beorn7/perks: v0.0.0-20180321164747-3a771d992973, github.com/golang/protobuf: v1.2.0, github.com/matttproud/golang_protobuf_extensions: v1.0.1, github.com/povilasv/prommod: v0.0.5, github.com/prometheus/client_golang: v0.9.2, github.com/prometheus/client_model: v0.0.0-20180712105110-5c3871d89910, github.com/prometheus/common: v0.0.0-20181126121408-4724e9255275, github.com/prometheus/procfs: v0.0.0-20181204211112-1dc9a6cbc91a)
 ```
