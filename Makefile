@@ -17,7 +17,7 @@ lint: $(LINTER)
 
 .PHONY: deps
 deps:
-	go mod download
+	go get .
 
 .PHONY: build
 build:
