@@ -4,6 +4,20 @@
 
 Export Go Module information to Prometheus.
 
+Should work with any recent version of Go. Tested with Go versions starting 1.10.
+
+# Download
+
+```
+go get github.com/povilasv/prommod
+```
+
+With modules:
+
+```
+GO111MODULE=on; go get github.com/povilasv/prommod
+```
+
 # Usage
 
 ```
