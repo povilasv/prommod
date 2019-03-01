@@ -12,7 +12,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// Build depedency information. Populated at build-time.
+// build module dependency information. Populated at build-time.
 var (
 	buildInfo, ok = debug.ReadBuildInfo()
 )
