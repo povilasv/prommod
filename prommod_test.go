@@ -11,7 +11,7 @@ import (
 )
 
 func ExampleNewCollector() {
-	prometheus.Register(prommod.NewCollector("test_app_name"))
+	prometheus.MustRegister(prommod.NewCollector("test_app_name"))
 
 	http.Handle("/metrics", promhttp.Handler())
 
