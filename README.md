@@ -1,6 +1,6 @@
 # prommod
 
-Export Golang Module information to Prometheus.
+Export Go Module information to Prometheus.
 
 # Usage
 
