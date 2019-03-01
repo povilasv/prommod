@@ -1,5 +1,6 @@
 ![prommod](https://api.travis-ci.com/povilasv/prommod.svg?branch=master)
 ![prommod](https://goreportcard.com/badge/github.com/povilasv/prommod)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpovilasv%2Fprommod.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpovilasv%2Fprommod?ref=badge_shield)
 # prommod
 
 Export Go Module information to Prometheus.
@@ -87,3 +88,7 @@ Output:
 ```
 (github.com/beorn7/perks: v0.0.0-20180321164747-3a771d992973, github.com/golang/protobuf: v1.2.0, github.com/matttproud/golang_protobuf_extensions: v1.0.1, github.com/povilasv/prommod: v0.0.5, github.com/prometheus/client_golang: v0.9.2, github.com/prometheus/client_model: v0.0.0-20180712105110-5c3871d89910, github.com/prometheus/common: v0.0.0-20181126121408-4724e9255275, github.com/prometheus/procfs: v0.0.0-20181204211112-1dc9a6cbc91a)
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpovilasv%2Fprommod.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpovilasv%2Fprommod?ref=badge_large)
