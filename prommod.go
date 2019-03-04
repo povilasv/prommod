@@ -15,7 +15,23 @@ import (
 // build module dependency information. Populated at build-time.
 var (
 	buildInfo, ok = debug.ReadBuildInfo()
+	info          string
 )
+
+func init() {
+	var versions []string
+	if ok {
+		for _, dep := range buildInfo.Deps {
+			d := dep
+			if dep.Replace != nil {
+				d = dep.Replace
+			}
+			versions = append(versions, d.Path+": "+d.Version)
+		}
+	}
+
+	info = fmt.Sprintf("(%s)", strings.Join(versions, ", "))
+}
 
 // NewCollector returns a collector which exports metrics about current dependency information.
 func NewCollector(program string) *prometheus.GaugeVec {
@@ -82,14 +98,5 @@ func Print(program string) string {
 
 // Info returns dependency versions
 func Info() string {
-	var info []string
-	for _, dep := range buildInfo.Deps {
-		d := dep
-		if dep.Replace != nil {
-			d = dep.Replace
-		}
-		info = append(info, d.Path+": "+d.Version)
-	}
-
-	return fmt.Sprintf("(%s)", strings.Join(info, ", "))
+	return info
 }
