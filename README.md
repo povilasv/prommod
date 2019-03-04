@@ -1,5 +1,6 @@
 ![prommod](https://api.travis-ci.com/povilasv/prommod.svg?branch=master)
 ![prommod](https://goreportcard.com/badge/github.com/povilasv/prommod)
+[![GoDoc](https://godoc.org/github.com/povilasv/prommod?status.svg)](https://godoc.org/github.com/povilasv/prommod)
 # prommod
 
 Export Go Module information to Prometheus.
