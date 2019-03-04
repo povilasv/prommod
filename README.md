@@ -1,6 +1,8 @@
 ![prommod](https://api.travis-ci.com/povilasv/prommod.svg?branch=master)
 ![prommod](https://goreportcard.com/badge/github.com/povilasv/prommod)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpovilasv%2Fprommod.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpovilasv%2Fprommod?ref=badge_shield)
+[![GoDoc](https://godoc.org/github.com/povilasv/prommod?status.svg)](https://godoc.org/github.com/povilasv/prommod)
+
 # prommod
 
 Export Go Module information to Prometheus.
