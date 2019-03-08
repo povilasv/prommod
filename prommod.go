@@ -16,6 +16,7 @@ import (
 var (
 	buildInfo, ok = debug.ReadBuildInfo()
 	info          string
+	version       map[string]string
 )
 
 func init() {
@@ -31,6 +32,17 @@ func init() {
 	}
 
 	info = fmt.Sprintf("(%s)", strings.Join(versions, ", "))
+
+	version := make(map[string]string)
+	if ok {
+		for _, dep := range buildInfo.Deps {
+			d := dep
+			if dep.Replace != nil {
+				d = dep.Replace
+			}
+			version[d.Path] = d.Version
+		}
+	}
 }
 
 // NewCollector returns a collector which exports metrics about current dependency information.
@@ -63,7 +75,7 @@ func NewCollector(program string) *prometheus.GaugeVec {
 // versionInfoTmpl contains the template used by Info.
 var versionInfoTmpl = `
 {{.Program}}
-{{range $k,$v := .Deps}} {{$k}}: {{$v}}
+  {{range $k,$v := .Deps}}       {{$k}}: {{$v}}
 {{end}}`
 
 type versionPrint struct {
@@ -73,23 +85,12 @@ type versionPrint struct {
 
 // Print returns module version information.
 func Print(program string) string {
-	m := make(map[string]string)
-	if ok {
-		for _, dep := range buildInfo.Deps {
-			d := dep
-			if dep.Replace != nil {
-				d = dep.Replace
-			}
-			m[d.Path] = d.Version
-		}
-	}
-
 	t := template.Must(template.New("version").Parse(versionInfoTmpl))
 
 	var buf bytes.Buffer
 	if err := t.ExecuteTemplate(&buf, "version", versionPrint{
 		Program: program,
-		Deps:    m,
+		Deps:    version,
 	}); err != nil {
 		panic(err)
 	}
