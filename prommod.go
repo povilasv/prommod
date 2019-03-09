@@ -56,14 +56,13 @@ func init() {
 func NewCollector(program string) *prometheus.GaugeVec {
 	gauge := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
-			Namespace: program,
-			Name:      "go_mod_info",
+			Name: "go_mod_info",
 			Help: fmt.Sprintf(
 				"A metric with a constant '1' value labeled by dependency name, version, from which %s was built.",
 				program,
 			),
 		},
-		[]string{"name", "version"},
+		[]string{"name", "version", "program"},
 	)
 	if !ok {
 		return gauge
@@ -74,7 +73,7 @@ func NewCollector(program string) *prometheus.GaugeVec {
 		if dep.Replace != nil {
 			d = dep.Replace
 		}
-		gauge.WithLabelValues(d.Path, d.Version).Set(1)
+		gauge.WithLabelValues(d.Path, d.Version, program).Set(1)
 	}
 	return gauge
 }
