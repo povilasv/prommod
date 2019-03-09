@@ -12,11 +12,19 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+// versionInfoTmpl contains the template used by Print call.
+var versionInfoTmpl = `
+{{.Program}}
+  {{range $k,$v := .Deps}}       {{$k}}: {{$v}}
+{{end}}`
+
 // build module dependency information. Populated at build-time.
 var (
 	buildInfo, ok = debug.ReadBuildInfo()
 	info          string
 	version       map[string]string
+
+	tmpl = template.Must(template.New("version").Parse(versionInfoTmpl))
 )
 
 func init() {
@@ -33,7 +41,7 @@ func init() {
 
 	info = fmt.Sprintf("(%s)", strings.Join(versions, ", "))
 
-	version := make(map[string]string)
+	version = make(map[string]string)
 	if ok {
 		for _, dep := range buildInfo.Deps {
 			d := dep
@@ -72,12 +80,6 @@ func NewCollector(program string) *prometheus.GaugeVec {
 	return gauge
 }
 
-// versionInfoTmpl contains the template used by Info.
-var versionInfoTmpl = `
-{{.Program}}
-  {{range $k,$v := .Deps}}       {{$k}}: {{$v}}
-{{end}}`
-
 type versionPrint struct {
 	Program string
 	Deps    map[string]string
@@ -85,10 +87,8 @@ type versionPrint struct {
 
 // Print returns module version information.
 func Print(program string) string {
-	t := template.Must(template.New("version").Parse(versionInfoTmpl))
-
 	var buf bytes.Buffer
-	if err := t.ExecuteTemplate(&buf, "version", versionPrint{
+	if err := tmpl.ExecuteTemplate(&buf, "version", versionPrint{
 		Program: program,
 		Deps:    version,
 	}); err != nil {
