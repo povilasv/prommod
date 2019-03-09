@@ -18,7 +18,7 @@ func ExampleNewCollector() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-func ExamplePrint() {
-	fmt.Println(prommod.Print("test_app_name"))
-	// Output: test_app_name
+func ExampleInfo() {
+	fmt.Println(prommod.Info())
+	// Output: ()
 }
