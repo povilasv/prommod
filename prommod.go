@@ -14,7 +14,7 @@ import (
 
 // versionInfoTmpl contains the template used by Print call.
 var versionInfoTmpl = `{{.Program}}
-{{range $k,$v := .Deps}}  {{$k}}:       {{$v}}
+{{range $k,$v := .Deps}}  {{$k}}:  {{$v}}
 {{end}}`
 
 // build module dependency information. Populated at build-time.
