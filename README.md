@@ -35,7 +35,7 @@ import (
 )
 
 func main() {
-	prometheus.Register(prommod.NewCollector("test_app_name"))
+	prometheus.Register(prommod.NewCollector("app_name"))
 
 	http.Handle("/metrics", promhttp.Handler())
 
@@ -47,16 +47,16 @@ func main() {
 # Example Metric Output
 
 ```
-# HELP name_go_mod_info A metric with a constant '1' value labeled by dependency name, version, from which name was built.
-# TYPE name_go_mod_info gauge
-name_go_mod_info{name="github.com/beorn7/perks",version="v0.0.0-20180321164747-3a771d992973"} 1
-name_go_mod_info{name="github.com/golang/protobuf",version="v1.2.0"} 1
-name_go_mod_info{name="github.com/matttproud/golang_protobuf_extensions",version="v1.0.1"} 1
-name_go_mod_info{name="github.com/povilasv/prommod",version="v0.0.2"} 1
-name_go_mod_info{name="github.com/prometheus/client_golang",version="v0.9.2"} 1
-name_go_mod_info{name="github.com/prometheus/client_model",version="v0.0.0-20180712105110-5c3871d89910"} 1
-name_go_mod_info{name="github.com/prometheus/common",version="v0.0.0-20181126121408-4724e9255275"} 1
-name_go_mod_info{name="github.com/prometheus/procfs",version="v0.0.0-20181204211112-1dc9a6cbc91a"} 1
+# HELP go_mod_info A metric with a constant '1' value labeled by dependency name, version, from which app_name was built.
+# TYPE go_mod_info gauge
+go_mod_info{name="github.com/beorn7/perks",program="app_name",version="v0.0.0-20180321164747-3a771d992973"} 1
+go_mod_info{name="github.com/golang/protobuf",program="app_name",version="v1.2.0"} 1
+go_mod_info{name="github.com/matttproud/golang_protobuf_extensions",program="app_name",version="v1.0.1"} 1
+go_mod_info{name="github.com/povilasv/prommod",program="app_name",version="v0.0.11-0.20190309143328-e661980fc053"} 1
+go_mod_info{name="github.com/prometheus/client_golang",program="app_name",version="v0.9.2"} 1
+go_mod_info{name="github.com/prometheus/client_model",program="app_name",version="v0.0.0-20180712105110-5c3871d89910"} 1
+go_mod_info{name="github.com/prometheus/common",program="app_name",version="v0.0.0-20181126121408-4724e9255275"} 1
+go_mod_info{name="github.com/prometheus/procfs",program="app_name",version="v0.0.0-20181204211112-1dc9a6cbc91a"} 1
 ```
 
 # Example Print
