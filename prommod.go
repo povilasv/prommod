@@ -54,6 +54,9 @@ func init() {
 
 // NewCollector returns a collector which exports metrics about current dependency information.
 func NewCollector(program string) *prometheus.GaugeVec {
+	if !ok {
+		buildInfo, ok = debug.ReadBuildInfo()
+	}
 	gauge := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: "go_mod_info",
